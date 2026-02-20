@@ -1,0 +1,25 @@
+# Tasks — {{PROJECT_NAME}}
+
+## MVP
+
+### Sprint 1 — Setup & Auth
+- [ ] Setup Next.js + shadcn/ui + Tailwind
+- [ ] Supabase Auth (email + OAuth Google)
+- [ ] Middleware auth protection
+- [ ] Pages : login, signup, forgot-password
+
+### Sprint 2 — Core Feature
+- [ ] [Feature principale]
+- [ ] [Feature principale]
+
+### Sprint 3 — Payments
+- [ ] Stripe Checkout integration
+- [ ] Webhook handler
+- [ ] Pricing page
+
+### Sprint 4 — Polish & Launch
+- [ ] Landing page
+- [ ] PostHog tracking
+- [ ] SEO meta tags
+- [ ] Error handling global
+- [ ] Tests coverage > 80%

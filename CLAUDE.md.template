@@ -1,0 +1,27 @@
+# {{PROJECT_NAME}}
+
+## Description
+{{PROJECT_DESC}}
+
+## Cible
+{{TARGET}}
+
+## Workflow SDD
+Pour chaque feature :
+1. Écrire la spec dans specs/tasks/
+2. Research marché si pertinent (@market-researcher)
+3. Challenge business si pricing/offer (@business-strategist)
+4. Design UI (@ui-designer)
+5. Implémenter (@implementer)
+6. Review (@reviewer)
+7. Audit sécurité (@security-auditor)
+8. Tracking PostHog (@growth-analyst)
+9. Deploy (@deployer)
+10. Monitor (@monitor)
+
+## Conventions
+- Voir ~/.claude/CLAUDE.md pour les conventions globales
+- Specs dans specs/tasks/ avec checklist
+- Docs business dans docs/business-model.md
+- Research dans docs/research/
+- Analytics plan dans docs/analytics-plan.md

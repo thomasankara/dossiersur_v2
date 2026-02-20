@@ -1,0 +1,44 @@
+# Analytics Plan — {{PROJECT_NAME}}
+
+## Convention
+- Format events : categorie_action (snake_case, anglais)
+- Code centralisé : src/lib/posthog/events.ts
+- JAMAIS de PII dans les events/properties
+
+## Events
+
+### Auth
+| Event | Properties | Description |
+|-------|-----------|-------------|
+| auth_signup | method, source | Inscription |
+| auth_login | method | Connexion |
+| auth_logout | - | Déconnexion |
+
+### Onboarding
+| Event | Properties | Description |
+|-------|-----------|-------------|
+| onboarding_started | - | Début onboarding |
+| onboarding_step_completed | step_number, step_name | Étape complétée |
+| onboarding_completed | duration_seconds | Onboarding terminé |
+
+### Core Feature
+| Event | Properties | Description |
+|-------|-----------|-------------|
+| [feature]_created | - | Création |
+| [feature]_updated | field_changed | Modification |
+| [feature]_deleted | - | Suppression |
+
+### Payment
+| Event | Properties | Description |
+|-------|-----------|-------------|
+| payment_checkout_started | plan, price | Début checkout |
+| payment_completed | plan, price, method | Paiement réussi |
+| payment_failed | plan, error_type | Paiement échoué |
+| subscription_cancelled | plan, reason | Annulation |
+
+### Engagement
+| Event | Properties | Description |
+|-------|-----------|-------------|
+| page_viewed | path | Page vue |
+| feature_used | feature_name | Utilisation feature |
+| feedback_submitted | type, rating | Feedback envoyé |

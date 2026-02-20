@@ -1,0 +1,42 @@
+# Architecture — {{PROJECT_NAME}}
+
+## Stack
+- Framework : Next.js 15 (App Router, RSC)
+- Langage : TypeScript strict
+- UI : shadcn/ui + Tailwind CSS v4
+- Auth + DB : Supabase
+- Paiement : Stripe
+- Analytics : PostHog
+- Deploy : Vercel
+- Tests : Vitest + Testing Library
+
+## Structure dossiers
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── (marketing)/        # Pages publiques (landing, pricing)
+│   ├── (auth)/             # Login, signup, forgot-password
+│   ├── (dashboard)/        # App protégée
+│   └── api/                # API routes
+├── components/
+│   ├── ui/                 # shadcn/ui components
+│   ├── forms/              # Formulaires spécifiques
+│   ├── layouts/            # Layouts réutilisables
+│   └── [feature]/          # Composants par feature
+├── lib/
+│   ├── supabase/           # Clients Supabase (server + browser)
+│   ├── stripe/             # Config Stripe
+│   ├── posthog/            # Events centralisés
+│   └── utils/              # Helpers
+├── types/                  # Types TypeScript globaux
+└── middleware.ts            # Auth guards
+```
+
+## Modèle de données
+[Schéma Supabase avec tables et relations]
+
+## Flux de données
+[Diagrammes des flux principaux]
+
+## Intégrations externes
+[APIs tierces, webhooks]
