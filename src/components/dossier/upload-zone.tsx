@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useUpload } from "@/hooks/use-upload";
 import { AnalysisProgress } from "./analysis-progress";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import {
 import { Upload, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DOC_TYPE_OPTIONS } from "@/lib/constants/doc-types";
+import { trackDocumentAnalyzed } from "@/lib/posthog/events";
 
 const ALLOWED_TYPES = [
   "application/pdf",
@@ -54,6 +55,16 @@ export function UploadZone({ candidatId, dossierId }: UploadZoneProps) {
     setClientError(null);
     return fileList;
   }, []);
+
+  // Track completed analyses (not uploads)
+  const prevDoneCountRef = useRef(0);
+  useEffect(() => {
+    const currentDone = files.filter((f) => f.state === "done").length;
+    if (currentDone > prevDoneCountRef.current) {
+      trackDocumentAnalyzed(docType);
+    }
+    prevDoneCountRef.current = currentDone;
+  }, [files, docType]);
 
   const handleFiles = useCallback(
     (fileList: FileList | null) => {

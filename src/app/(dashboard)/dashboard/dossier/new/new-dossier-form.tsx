@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trackDossierCreated } from "@/lib/posthog/events";
 
 export function NewDossierForm() {
   const [pending, setPending] = useState(false);
@@ -20,8 +21,9 @@ export function NewDossierForm() {
 
     if (result?.error) {
       toast.error(result.error);
+    } else {
+      trackDossierCreated();
     }
-    // If success, redirect happens server-side
   }
 
   return (

@@ -5,7 +5,8 @@ import { createCheckoutSession } from "@/actions/billing";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import type { PlanKey } from "@/lib/stripe/config";
+import { trackCheckoutStarted } from "@/lib/posthog/events";
+import { PLANS, type PlanKey } from "@/lib/stripe/config";
 
 interface CheckoutButtonProps {
   planKey: PlanKey;
@@ -22,6 +23,7 @@ export function CheckoutButton({
 
   function handleClick() {
     startTransition(async () => {
+      trackCheckoutStarted(planKey, PLANS[planKey].price);
       const formData = new FormData();
       formData.append("planKey", planKey);
       const result = await createCheckoutSession(formData);

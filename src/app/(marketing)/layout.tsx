@@ -32,8 +32,23 @@ export default function MarketingLayout({
 
       {/* Footer */}
       <footer className="border-t py-8">
-        <div className="mx-auto max-w-5xl px-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} DossierSûr. Tous droits réservés.
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} DossierSûr. Tous droits réservés.
+            </p>
+            <nav className="flex gap-4 text-sm text-muted-foreground">
+              <Link href="/mentions-legales" className="hover:text-foreground transition-colors">
+                Mentions légales
+              </Link>
+              <Link href="/cgu" className="hover:text-foreground transition-colors">
+                CGU
+              </Link>
+              <Link href="/confidentialite" className="hover:text-foreground transition-colors">
+                Confidentialité
+              </Link>
+            </nav>
+          </div>
         </div>
       </footer>
     </div>
