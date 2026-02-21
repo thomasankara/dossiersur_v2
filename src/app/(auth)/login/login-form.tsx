@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-export function LoginForm() {
+export function LoginForm({ redirect }: { redirect?: string }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -64,6 +64,9 @@ export function LoginForm() {
         </div>
 
         <form action={handleSubmit} className="space-y-4">
+          {redirect && (
+            <input type="hidden" name="redirect" value={redirect} />
+          )}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input

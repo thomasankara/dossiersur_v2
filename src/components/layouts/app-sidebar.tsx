@@ -31,6 +31,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { logout } from "@/actions/auth";
+import { trackLogout } from "@/lib/posthog/events";
 
 const navItems = [
   { title: "Tableau de bord", href: "/dashboard", icon: LayoutDashboard },
@@ -124,7 +125,10 @@ export function AppSidebar({ user }: AppSidebarProps) {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => logout()}
+              onClick={() => {
+                trackLogout();
+                logout();
+              }}
               className="text-destructive focus:text-destructive"
             >
               <LogOut className="mr-2 h-4 w-4" />

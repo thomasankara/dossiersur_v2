@@ -21,4 +21,12 @@ describe("getSafeRedirect()", () => {
   it("blocks protocol-relative URL", () => {
     expect(getSafeRedirect("//evil.com")).toBe("/dashboard");
   });
+
+  it("blocks backslash-prefixed path", () => {
+    expect(getSafeRedirect("/\\evil.com")).toBe("/dashboard");
+  });
+
+  it("blocks backslash in path", () => {
+    expect(getSafeRedirect("/foo\\bar")).toBe("/dashboard");
+  });
 });

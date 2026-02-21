@@ -94,7 +94,7 @@ export function SignupForm() {
               type="password"
               placeholder="••••••••"
               required
-              minLength={6}
+              minLength={8}
               autoComplete="new-password"
             />
           </div>
@@ -109,12 +109,12 @@ export function SignupForm() {
 
           <p className="text-center text-xs text-muted-foreground">
             En créant un compte, vous acceptez nos{" "}
-            <Link href="/legal/cgu" className="underline hover:text-primary">
+            <Link href="/cgu" className="underline hover:text-primary">
               CGU
             </Link>{" "}
             et notre{" "}
             <Link
-              href="/legal/confidentialite"
+              href="/confidentialite"
               className="underline hover:text-primary"
             >
               politique de confidentialité

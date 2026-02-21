@@ -9,12 +9,12 @@ import { rateLimit } from "@/lib/rate-limit";
 
 const loginSchema = z.object({
   email: z.string().email("Email invalide"),
-  password: z.string().min(6, "Mot de passe trop court (6 caractères minimum)"),
+  password: z.string().min(8, "Mot de passe trop court (8 caractères minimum)"),
 });
 
 const signupSchema = z.object({
   email: z.string().email("Email invalide"),
-  password: z.string().min(6, "Mot de passe trop court (6 caractères minimum)"),
+  password: z.string().min(8, "Mot de passe trop court (8 caractères minimum)"),
   fullName: z.string().min(1, "Nom requis"),
 });
 

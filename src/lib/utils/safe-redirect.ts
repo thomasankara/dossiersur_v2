@@ -8,5 +8,6 @@ export function getSafeRedirect(value: string | null): string {
   if (!value) return DEFAULT_REDIRECT;
   if (!value.startsWith("/")) return DEFAULT_REDIRECT;
   if (value.startsWith("//")) return DEFAULT_REDIRECT;
+  if (value.includes("\\")) return DEFAULT_REDIRECT;
   return value;
 }

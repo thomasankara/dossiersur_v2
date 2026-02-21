@@ -19,9 +19,14 @@ describe("verifyMimeType()", () => {
     expect(verifyMimeType(makeBuffer([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d]), "image/png")).toBe(true);
   });
 
-  it("accepts valid WebP magic bytes", () => {
-    // RIFF header
-    expect(verifyMimeType(makeBuffer([0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00]), "image/webp")).toBe(true);
+  it("accepts valid WebP magic bytes (RIFF + WEBP marker)", () => {
+    // RIFF....WEBP
+    expect(verifyMimeType(makeBuffer([0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00, 0x57, 0x45, 0x42, 0x50]), "image/webp")).toBe(true);
+  });
+
+  it("rejects RIFF/AVI file declared as WebP", () => {
+    // RIFF....AVI (not WEBP)
+    expect(verifyMimeType(makeBuffer([0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00, 0x41, 0x56, 0x49, 0x20]), "image/webp")).toBe(false);
   });
 
   it("rejects unsupported type", () => {

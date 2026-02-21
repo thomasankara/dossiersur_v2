@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layouts/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { PostHogIdentify } from "@/components/posthog-identify";
 
 export default async function DashboardLayout({
   children,
@@ -25,6 +26,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
+      <PostHogIdentify userId={user.id} />
       <AppSidebar user={sidebarUser} />
       <SidebarInset>
         {children}

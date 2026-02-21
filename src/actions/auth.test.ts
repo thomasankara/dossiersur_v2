@@ -30,7 +30,7 @@ describe("login()", () => {
   });
 
   it("returns error on invalid email", async () => {
-    const fd = buildFormData({ email: "not-an-email", password: "123456" });
+    const fd = buildFormData({ email: "not-an-email", password: "12345678" });
     const result = await login(fd);
     expect(result).toEqual({ error: "Email invalide" });
   });
@@ -38,21 +38,21 @@ describe("login()", () => {
   it("returns error on short password", async () => {
     const fd = buildFormData({ email: "test@example.com", password: "123" });
     const result = await login(fd);
-    expect(result).toEqual({ error: "Mot de passe trop court (6 caractères minimum)" });
+    expect(result).toEqual({ error: "Mot de passe trop court (8 caractères minimum)" });
   });
 
   it("returns error on signIn failure", async () => {
     mockSupabase.auth.signInWithPassword.mockResolvedValueOnce({
       error: { message: "Invalid" },
     });
-    const fd = buildFormData({ email: "test@example.com", password: "123456" });
+    const fd = buildFormData({ email: "test@example.com", password: "12345678" });
     const result = await login(fd);
     expect(result).toEqual({ error: "Email ou mot de passe incorrect" });
   });
 
   it("redirects on success", async () => {
     mockSupabase.auth.signInWithPassword.mockResolvedValueOnce({ error: null });
-    const fd = buildFormData({ email: "test@example.com", password: "123456" });
+    const fd = buildFormData({ email: "test@example.com", password: "12345678" });
     await expect(login(fd)).rejects.toThrow("NEXT_REDIRECT:/dashboard");
   });
 
@@ -60,7 +60,7 @@ describe("login()", () => {
     mockSupabase.auth.signInWithPassword.mockResolvedValueOnce({ error: null });
     const fd = buildFormData({
       email: "test@example.com",
-      password: "123456",
+      password: "12345678",
       redirect: "https://evil.com",
     });
     await expect(login(fd)).rejects.toThrow("NEXT_REDIRECT:/dashboard");
@@ -70,7 +70,7 @@ describe("login()", () => {
     mockSupabase.auth.signInWithPassword.mockResolvedValueOnce({ error: null });
     const fd = buildFormData({
       email: "test@example.com",
-      password: "123456",
+      password: "12345678",
       redirect: "/dashboard/billing",
     });
     await expect(login(fd)).rejects.toThrow("NEXT_REDIRECT:/dashboard/billing");
@@ -78,7 +78,7 @@ describe("login()", () => {
 
   it("returns error when rate limited", async () => {
     vi.mocked(rateLimit).mockReturnValueOnce({ success: false, remaining: 0 });
-    const fd = buildFormData({ email: "test@example.com", password: "123456" });
+    const fd = buildFormData({ email: "test@example.com", password: "12345678" });
     const result = await login(fd);
     expect(result).toEqual({ error: "Trop de tentatives. Réessayez dans une minute." });
   });
@@ -90,7 +90,7 @@ describe("signup()", () => {
   });
 
   it("returns error on validation failure", async () => {
-    const fd = buildFormData({ email: "bad", password: "123456", fullName: "Test" });
+    const fd = buildFormData({ email: "bad", password: "12345678", fullName: "Test" });
     const result = await signup(fd);
     expect(result).toEqual({ error: "Email invalide" });
   });
@@ -99,14 +99,14 @@ describe("signup()", () => {
     mockSupabase.auth.signUp.mockResolvedValueOnce({
       error: { message: "User already registered" },
     });
-    const fd = buildFormData({ email: "test@example.com", password: "123456", fullName: "Test" });
+    const fd = buildFormData({ email: "test@example.com", password: "12345678", fullName: "Test" });
     const result = await signup(fd);
     expect(result).toEqual({ error: "Un compte existe déjà avec cet email" });
   });
 
   it("redirects on success", async () => {
     mockSupabase.auth.signUp.mockResolvedValueOnce({ error: null });
-    const fd = buildFormData({ email: "test@example.com", password: "123456", fullName: "Test" });
+    const fd = buildFormData({ email: "test@example.com", password: "12345678", fullName: "Test" });
     await expect(signup(fd)).rejects.toThrow("NEXT_REDIRECT:/dashboard");
   });
 });

@@ -8,7 +8,7 @@ export default defineConfig({
     setupFiles: ["src/__tests__/setup.ts"],
     coverage: {
       provider: "v8",
-      thresholds: { statements: 60, branches: 60, functions: 60, lines: 60 },
+      thresholds: { statements: 90, branches: 85, functions: 90, lines: 90 },
       exclude: [
         "src/components/ui/**",
         "src/app/**/page.tsx",
