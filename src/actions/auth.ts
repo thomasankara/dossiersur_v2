@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { z } from "zod";
+import { getSafeRedirect } from "@/lib/utils/safe-redirect";
+import { rateLimit } from "@/lib/rate-limit";
 
 const loginSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -21,6 +23,12 @@ const resetSchema = z.object({
 });
 
 export async function login(formData: FormData) {
+  const ip = (await headers()).get("x-forwarded-for") ?? "unknown";
+  const { success: allowed } = rateLimit(`login:${ip}`, { windowMs: 60_000, maxRequests: 5 });
+  if (!allowed) {
+    return { error: "Trop de tentatives. Réessayez dans une minute." };
+  }
+
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -38,10 +46,16 @@ export async function login(formData: FormData) {
   }
 
   const redirectTo = formData.get("redirect") as string | null;
-  redirect(redirectTo ?? "/dashboard");
+  redirect(getSafeRedirect(redirectTo));
 }
 
 export async function signup(formData: FormData) {
+  const ip = (await headers()).get("x-forwarded-for") ?? "unknown";
+  const { success: allowed } = rateLimit(`signup:${ip}`, { windowMs: 60_000, maxRequests: 5 });
+  if (!allowed) {
+    return { error: "Trop de tentatives. Réessayez dans une minute." };
+  }
+
   const parsed = signupSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -96,6 +110,12 @@ export async function logout() {
 }
 
 export async function resetPassword(formData: FormData) {
+  const ip = (await headers()).get("x-forwarded-for") ?? "unknown";
+  const { success: allowed } = rateLimit(`reset:${ip}`, { windowMs: 60_000, maxRequests: 3 });
+  if (!allowed) {
+    return { error: "Trop de tentatives. Réessayez dans une minute." };
+  }
+
   const parsed = resetSchema.safeParse({
     email: formData.get("email"),
   });

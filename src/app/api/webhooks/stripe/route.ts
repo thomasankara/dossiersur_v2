@@ -3,8 +3,15 @@ import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe/client";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PLANS, type PlanKey } from "@/lib/stripe/config";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
+  const ip = request.headers.get("x-forwarded-for") ?? "unknown";
+  const { success: allowed } = rateLimit(`webhook:${ip}`, { windowMs: 60_000, maxRequests: 100 });
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
     console.error("STRIPE_WEBHOOK_SECRET is not configured");
