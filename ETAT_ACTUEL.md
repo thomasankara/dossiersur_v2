@@ -19,7 +19,7 @@
 | STRIPE_PRICE_PRO | OK (price_1T2xKLL0OHt0t4W1N4SiBXmW) |
 | STRIPE_PRICE_BUSINESS | OK (price_1T2xKLL0OHt0t4W1TuvIbjc9) |
 | STRIPE_WEBHOOK_SECRET | MANQUANT — nécessite Stripe CLI |
-| NEXT_PUBLIC_POSTHOG_KEY | OK (phx_...) |
+| NEXT_PUBLIC_POSTHOG_KEY | À VÉRIFIER — la clé projet commence par "phc_" ; "phx_" est une clé API personnelle qui n'ingère aucun événement |
 | NEXT_PUBLIC_POSTHOG_HOST | OK (eu.i.posthog.com) |
 | ANALYSIS_API_URL | MANQUANT — API Python pas encore déployée |
 | ANALYSIS_API_KEY | MANQUANT — API Python pas encore déployée |

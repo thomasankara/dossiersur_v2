@@ -46,6 +46,30 @@ describe("analyzeDocument()", () => {
     expect(result.confidence_score).toBe(85);
   });
 
+  it("includes the X-API-Key header when an API key is configured", async () => {
+    vi.resetModules();
+    vi.stubEnv("ANALYSIS_API_KEY", "secret-key");
+    const fetchMock = mockFetchResponse(VALID_ANALYZE_RESPONSE);
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { analyzeDocument: analyze } = await import("./client");
+    await analyze({
+      document_url: "https://example.com/doc",
+      document_type: "cni",
+      filename: "test.pdf",
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({ "X-API-Key": "secret-key" }),
+      }),
+    );
+
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
   it("throws AnalysisApiError on Zod validation failure", async () => {
     vi.stubGlobal("fetch", mockFetchResponse({ bad: "data" }));
     await expect(
